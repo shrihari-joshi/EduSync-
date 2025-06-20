@@ -1,0 +1,5 @@
+tempFiles
+.pyc
+_pycache_
+live-courses
+env_name
