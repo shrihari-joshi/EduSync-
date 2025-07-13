@@ -4,7 +4,6 @@ import { uploadOnCloud } from "../utils/cloudinary.js";
 import { deleteFromCloud } from "../utils/cloudinary.js";
 import dotenv from "dotenv";
 import axios from "axios";
-import { request } from "express";
 import { UserModel } from "../models/userModel.js";
 import { ProgressModel } from "../models/progressModel.js";
 dotenv.config();

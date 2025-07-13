@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SquishyCard } from "../../components/index.js";
+import CourseCards from "../../components/CourseCard.jsx";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";

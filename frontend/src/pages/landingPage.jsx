@@ -1,6 +1,5 @@
 import React from 'react'
-import { Navbar } from '../components'
-import { Example } from '../components/Sidebar'
+import Navbar from '../components/Navbar.jsx'
 import ShuffleHero from '../components/Hero'
 export default function landingPage() {
   return (

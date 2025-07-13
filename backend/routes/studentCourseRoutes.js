@@ -4,7 +4,7 @@ import {
   getAllCoursesByStudentController,
   getAllCoursesController,
   getCourseById,
-    unenrollStudentController,
+  unenrollStudentController,
   getCourseRecommendation,
   findSimilarCoursesController
 } from "../controllers/courseControllers.js";
@@ -14,14 +14,14 @@ const router = express.Router();
 //api/v1/user/student/course
 
 router
-    .route("/:id")
-    .post(enrollStudentController)
-    .get(getAllCoursesByStudentController)
-    .delete(unenrollStudentController);
+  .route("/:id")
+  .post(enrollStudentController)
+  .get(getAllCoursesByStudentController)
+  .delete(unenrollStudentController);
 
 router.route("/").get(getAllCoursesController);
 router.route("/give/recommendation").post(getCourseRecommendation);
-router.get('/similar-courses/:id',findSimilarCoursesController);
+router.get('/similar-courses/:id', findSimilarCoursesController);
 
 router.route("/get-course/:id").get(getCourseById);
 

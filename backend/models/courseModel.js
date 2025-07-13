@@ -95,15 +95,6 @@ const CourseSchema = new mongoose.Schema({
     type: [mongoose.Types.ObjectId],
     default: [],
   },
-  // leaderboard: {
-  //   type: {
-  //     student: mongoose.Types.ObjectId,
-  //     marks: {
-  //       type: Number,
-  //       default: 0,
-  //     },
-  //   },
-  // },
   modules: {
     type: [ModuleSchema],
     default: [],

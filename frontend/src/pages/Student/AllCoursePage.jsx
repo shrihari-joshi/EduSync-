@@ -9,7 +9,7 @@ const AllCoursePage = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  
+
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
@@ -19,9 +19,9 @@ const AllCoursePage = () => {
         const response = await axios.get(
           `${getAllCourses}/${user._id}`,
           { withCredentials: true }
-          );
-        console.log(response.data)
-        
+        );
+        console.log("Fetched courses:", response.data);
+
         if (response?.data?.success) {
           setEnrolledCourses(response.data.courses || []);
           localStorage.setItem(
@@ -30,15 +30,15 @@ const AllCoursePage = () => {
           );
         }
       } catch (error) {
-        console.log(error);
+        console.log("Error", error);
       } finally {
         setIsLoading(false);
       }
     };
-    
+
     fetchCourses();
   }, [user?.role]);
-  
+
   const openCourse = (courseId) => {
     navigate(`/home/course-details/${courseId}`);
   };
@@ -53,11 +53,11 @@ const AllCoursePage = () => {
     return enrolledCourses;
   };
 
- 
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-[1440px] mx-auto px-6 py-8">
-        
+
         {/* Enrolled Courses Section */}
         <CourseSection
           title="Your Courses"
@@ -67,8 +67,8 @@ const AllCoursePage = () => {
           actionText="Continue Classes"
           onCourseClick={openCourse}
         />
-              
-              {/* Recommended Courses Section */}
+
+        {/* Recommended Courses Section */}
         <RecommendedCourses onCourseClick={openCourseDetail} />
       </div>
     </div>

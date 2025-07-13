@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useColorMode } from "@chakra-ui/react";
-import { 
-  FiChevronLeft, 
+import {
+  FiChevronLeft,
   FiHome,
   FiBookOpen,
   FiCalendar,
@@ -13,7 +13,7 @@ import {
   FiPlusCircle
 } from "react-icons/fi";
 
-export const Example = () => (
+const Example = () => (
   <div className="flex min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
     <Sidebar />
     <div className="flex-1 p-1">
@@ -36,7 +36,7 @@ const Sidebar = () => {
   const hoverBgColor = isDark ? 'hover:bg-gray-800' : 'hover:bg-indigo-50';
   const selectedBgColor = isDark ? 'bg-indigo-900' : 'bg-indigo-100';
   const selectedTextColor = 'text-indigo-600';
-  
+
   return (
     <motion.div
       layout
@@ -50,26 +50,26 @@ const Sidebar = () => {
     >
       <div className="flex flex-col h-full">
         <Logo open={open} isDark={isDark} />
-        
+
         <div className="flex-1 px-3 py-4 overflow-y-auto">
-          <SidebarLink 
-            to={`${user.role === "Student" ? "/home" : "/home/teacher"}`} 
-            title="Dashboard" 
-            Icon={FiHome} 
-            selected={selected} 
-            setSelected={setSelected} 
+          <SidebarLink
+            to={`${user.role === "Student" ? "/home" : "/home/teacher"}`}
+            title="Dashboard"
+            Icon={FiHome}
+            selected={selected}
+            setSelected={setSelected}
             open={open}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
             selectedBgColor={selectedBgColor}
             selectedTextColor={selectedTextColor}
           />
-          <SidebarLink 
-            to={user.role === "Student" ? "/home" : "/home/teacher-add-course"} 
-            title={user.role === "Student" ? "Assignments" : "Add Courses"} 
-            Icon={user.role === "Student" ? FiFileText : FiPlusCircle} 
-            selected={selected} 
-            setSelected={setSelected} 
+          <SidebarLink
+            to={user.role === "Student" ? "/home" : "/home/teacher-add-course"}
+            title={user.role === "Student" ? "Assignments" : "Add Courses"}
+            Icon={user.role === "Student" ? FiFileText : FiPlusCircle}
+            selected={selected}
+            setSelected={setSelected}
             open={open}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
@@ -77,12 +77,12 @@ const Sidebar = () => {
             selectedTextColor={selectedTextColor}
           />
           {user.role === "Student" && (
-            <SidebarLink 
-              to="/home/mycourses" 
-              title="My Courses" 
-              Icon={FiBookOpen} 
-              selected={selected} 
-              setSelected={setSelected} 
+            <SidebarLink
+              to="/home/mycourses"
+              title="My Courses"
+              Icon={FiBookOpen}
+              selected={selected}
+              setSelected={setSelected}
               open={open}
               isDark={isDark}
               hoverBgColor={hoverBgColor}
@@ -90,48 +90,48 @@ const Sidebar = () => {
               selectedTextColor={selectedTextColor}
             />
           )}
-          <SidebarLink 
-            to="/home/calendar" 
-            title="Calendar" 
-            Icon={FiCalendar} 
-            selected={selected} 
-            setSelected={setSelected} 
+          <SidebarLink
+            to="/home/calendar"
+            title="Calendar"
+            Icon={FiCalendar}
+            selected={selected}
+            setSelected={setSelected}
             open={open}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
             selectedBgColor={selectedBgColor}
             selectedTextColor={selectedTextColor}
           />
-          <SidebarLink 
-            to="/home/blog" 
-            title="Blog" 
-            Icon={FiFileText} 
-            selected={selected} 
-            setSelected={setSelected} 
+          <SidebarLink
+            to="/home/blog"
+            title="Blog"
+            Icon={FiFileText}
+            selected={selected}
+            setSelected={setSelected}
             open={open}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
             selectedBgColor={selectedBgColor}
             selectedTextColor={selectedTextColor}
           />
-          <SidebarLink 
-            to="/home/chat" 
-            title="Chatbot" 
-            Icon={FiMessageSquare} 
-            selected={selected} 
-            setSelected={setSelected} 
+          <SidebarLink
+            to="/home/chat"
+            title="Chatbot"
+            Icon={FiMessageSquare}
+            selected={selected}
+            setSelected={setSelected}
             open={open}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
             selectedBgColor={selectedBgColor}
             selectedTextColor={selectedTextColor}
           />
-          <SidebarLink 
-            to={`${user.role === "Student" ? "profile" : "teacherProfile"}`} 
-            title="Profile" 
-            Icon={FiUser} 
-            selected={selected} 
-            setSelected={setSelected} 
+          <SidebarLink
+            to={`${user.role === "Student" ? "profile" : "teacherProfile"}`}
+            title="Profile"
+            Icon={FiUser}
+            selected={selected}
+            setSelected={setSelected}
             open={open}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
@@ -139,11 +139,11 @@ const Sidebar = () => {
             selectedTextColor={selectedTextColor}
           />
         </div>
-        
+
         <div className="p-4">
-          <ToggleButton 
-            open={open} 
-            setOpen={setOpen} 
+          <ToggleButton
+            open={open}
+            setOpen={setOpen}
             isDark={isDark}
             hoverBgColor={hoverBgColor}
           />
@@ -153,13 +153,13 @@ const Sidebar = () => {
   );
 };
 
-const SidebarLink = ({ 
-  to, 
-  title, 
-  Icon, 
-  selected, 
-  setSelected, 
-  open, 
+const SidebarLink = ({
+  to,
+  title,
+  Icon,
+  selected,
+  setSelected,
+  open,
   notifs,
   isDark,
   hoverBgColor,
@@ -167,7 +167,7 @@ const SidebarLink = ({
   selectedTextColor
 }) => {
   const isActive = selected === title;
-  
+
   return (
     <Link to={to}>
       <div
@@ -183,7 +183,7 @@ const SidebarLink = ({
         <div className={`text-xl ${isActive ? selectedTextColor : ''}`}>
           <Icon />
         </div>
-        
+
         {open && (
           <motion.span
             initial={{ opacity: 0 }}
@@ -194,7 +194,7 @@ const SidebarLink = ({
             {title}
           </motion.span>
         )}
-        
+
         {notifs && open && (
           <motion.div
             initial={{ scale: 0 }}
@@ -217,7 +217,7 @@ const Logo = ({ open, isDark }) => (
         <path d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z" fill="white" />
       </svg>
     </div>
-    
+
     {open && (
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -249,7 +249,7 @@ const ToggleButton = ({ open, setOpen, isDark, hoverBgColor }) => (
     >
       <FiChevronLeft className="text-indigo-600" size={20} />
     </motion.div>
-    
+
     {open && (
       <motion.span
         initial={{ opacity: 0 }}
@@ -262,3 +262,5 @@ const ToggleButton = ({ open, setOpen, isDark, hoverBgColor }) => (
     )}
   </button>
 );
+
+export default Example;

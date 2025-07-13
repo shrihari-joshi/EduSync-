@@ -16,27 +16,22 @@ const data = [
     {
         name: "Module 1",
         yourScore: 85,
-        avgScore: 75,
     },
     {
         name: "Module 2",
         yourScore: 78,
-        avgScore: 70,
     },
     {
         name: "Module 3",
         yourScore: 74,
-        avgScore: 68,
     },
     {
         name: "Module 4",
         yourScore: 80,
-        avgScore: 72,
     },
     {
         name: "Module 5",
         yourScore: 85,
-        avgScore: 75,
     },
 ];
 
@@ -67,10 +62,6 @@ const PerformanceChart = () => {
                                 <stop offset="5%" stopColor="#00b4d8" stopOpacity={0.5} />
                                 <stop offset="95%" stopColor="#00b4d8" stopOpacity={0} />
                             </linearGradient>
-                            <linearGradient id="colorAvgScore" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#3d5afe" stopOpacity={0.5} />
-                                <stop offset="95%" stopColor="#3d5afe" stopOpacity={0} />
-                            </linearGradient>
                         </defs>
 
                         <XAxis dataKey="name" />
@@ -87,15 +78,6 @@ const PerformanceChart = () => {
                             fillOpacity={1}
                             fill="url(#colorYourScore)"
                             dot={{ fill: "#00b4d8", strokeWidth: 2, r: 4 }}
-                        />
-                        <Area
-                            type="monotone"
-                            dataKey="avgScore"
-                            name="Avg Score"
-                            stroke="#3d5afe"
-                            fillOpacity={1}
-                            fill="url(#colorAvgScore)"
-                            dot={{ fill: "#3d5afe", strokeWidth: 2, r: 4 }}
                         />
                     </AreaChart>
                 </ResponsiveContainer>

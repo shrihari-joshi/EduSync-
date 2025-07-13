@@ -6,74 +6,74 @@ import { studentCourseEnrollment } from "../../../APIRoutes";
 import { useToast } from "@chakra-ui/react";
 
 const CourseDetailsPage = () => {
-      const toast = useToast();
-    
-    const { id } = useParams(); 
-    console.log(id)
-  
+  const toast = useToast();
+
+  const { id } = useParams();
+  console.log(id)
+
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [showStripeModal, setShowStripeModal] = useState(false);
-  
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  
-  useEffect(() => {
-  const fetchCourse = async () => {
-    if (!id) {
-      setError("Course ID is missing");
-      setLoading(false);
-      return;
-    }
-    
-    try {
-      console.log("Making API request to:", `${getCoursesbyId}/${id}`);
-      const response = await axios.get(`${getCoursesbyId}/${id}`);
-      console.log("API response:", response);
-      setCourse(response.data.course);
-    } catch (err) {
-      console.error("Error fetching course:", err);
-      setError("Failed to fetch course details");
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  fetchCourse();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      if (!id) {
+        setError("Course ID is missing");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        console.log("Making API request to:", `${getCoursesbyId}/${id}`);
+        const response = await axios.get(`${getCoursesbyId}/${id}`);
+        console.log("API response:", response);
+        setCourse(response.data.course);
+      } catch (err) {
+        console.error("Error fetching course:", err);
+        setError("Failed to fetch course details");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourse();
   }, [id]);
-    
-    
-    
-async function handleEnrollStudent() {
-  try {
-    const res = await axios.post(`${studentCourseEnrollment}/${user._id}`,{
-      courseId:id
-    });
-    if(res.data.success){
-      toast({
-        title: "Enrollment successful",
-        description: "Processing your enrollment request.",
-        status: "info",
-        duration: 5000,
-        isClosable: true,
+
+
+
+  async function handleEnrollStudent() {
+    try {
+      const res = await axios.post(`${studentCourseEnrollment}/${user._id}`, {
+        courseId: id
       });
+      if (res.data.success) {
+        toast({
+          title: "Enrollment successful",
+          description: "Processing your enrollment request.",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+      else {
+        toast({
+          title: "Enrollment failed",
+          description: "Failed to enroll in the course.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        })
+      }
     }
-    else{
-      toast({
-        title: "Enrollment failed",
-        description: "Failed to enroll in the course.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-    })    
-    } 
+    catch (error) {
+      console.log(error);
+    }
   }
-  catch (error) {
-    console.log(error);    
-  }
-}
 
   const handleBuyNow = () => {
     setShowStripeModal(true);
@@ -111,8 +111,8 @@ async function handleEnrollStudent() {
         <div className="bg-white rounded-xl shadow p-6 text-center">
           <h2 className="text-xl text-red-600 mb-2">Error Loading Course</h2>
           <p className="text-gray-600 mb-4">{error}</p>
-          <button 
-            onClick={() => navigate(-1)} 
+          <button
+            onClick={() => navigate(-1)}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Go Back
@@ -123,7 +123,7 @@ async function handleEnrollStudent() {
   }
 
   // Use actual course data if available, otherwise use mock data for display purposes
-    const displayCourse = course;
+  const displayCourse = course;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -171,7 +171,7 @@ async function handleEnrollStudent() {
             </div>
           </div>
         </div>
-        
+
         {/* Rest of component remains the same but uses displayCourse instead of mockCourse */}
         <div className="p-8">
           <div className="flex flex-col md:flex-row gap-8">
@@ -183,7 +183,7 @@ async function handleEnrollStudent() {
                   {displayCourse?.description}
                 </p>
               </div>
-              
+
               <div className="mb-8">
                 <h2 className="text-xl font-bold mb-4">What You'll Learn</h2>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -195,28 +195,28 @@ async function handleEnrollStudent() {
                   ))}
                 </ul>
               </div>
-              
-            <div className="mb-8">
-  <h2 className="text-xl font-bold mb-4">Tags</h2>
-  <div className="flex flex-wrap gap-3">
-    {displayCourse?.tags?.map((tag, index) => (
-      <span
-        key={index}
-        className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-medium shadow-sm hover:bg-blue-200 transition-colors"
-      >
-        <i className="fas fa-tag text-blue-500 mr-2"></i>
-        {tag}
-      </span>
-    ))}
-  </div>
-</div>
+
+              <div className="mb-8">
+                <h2 className="text-xl font-bold mb-4">Tags</h2>
+                <div className="flex flex-wrap gap-3">
+                  {displayCourse?.tags?.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-medium shadow-sm hover:bg-blue-200 transition-colors"
+                    >
+                      <i className="fas fa-tag text-blue-500 mr-2"></i>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
               <div>
                 <h2 className="text-xl font-bold mb-4">Course Content</h2>
                 <div className="space-y-3">
                   {displayCourse?.modules?.map((module, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
                     >
                       <div className="flex justify-between items-center">
@@ -233,7 +233,7 @@ async function handleEnrollStudent() {
                 </div>
               </div>
             </div>
-            
+
             {/* Right Column - Purchase Card */}
             <div className="md:w-80 lg:w-96">
               <div className="sticky top-8 bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
@@ -241,14 +241,14 @@ async function handleEnrollStudent() {
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-3xl font-bold text-gray-900">${displayCourse?.price}</span>
                   </div>
-                  
+
                   <button
                     onClick={handleBuyNow}
                     className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors mb-3"
                   >
                     Buy Now
                   </button>
-                  
+
                   <button
                     onClick={handleEnrollStudent}
                     disabled={isEnrolling}
@@ -263,11 +263,11 @@ async function handleEnrollStudent() {
                       "Enroll Now"
                     )}
                   </button>
-                  
+
                   <p className="text-sm text-gray-500 text-center mt-4 mb-6">
                     30-Day Money-Back Guarantee
                   </p>
-                  
+
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <i className="fas fa-infinity text-gray-700 mr-3"></i>
@@ -288,7 +288,7 @@ async function handleEnrollStudent() {
           </div>
         </div>
       </div>
-      
+
       {/* Stripe Payment Modal */}
       {showStripeModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -299,11 +299,11 @@ async function handleEnrollStudent() {
                 <i className="fas fa-times"></i>
               </button>
             </div>
-            
+
             <div className="border-t border-gray-200 pt-4 mb-4">
               <p className="font-medium mb-1">{displayCourse?.name}</p>
               <p className="text-gray-600 mb-4">Total: ${displayCourse?.price}</p>
-              
+
               {/* Mock Stripe Form */}
               <div className="space-y-4">
                 <div className="border border-gray-300 rounded-lg p-3">
@@ -314,12 +314,12 @@ async function handleEnrollStudent() {
                     <div className="bg-gray-100 h-10 rounded flex-1"></div>
                   </div>
                 </div>
-                
+
                 <div className="border border-gray-300 rounded-lg p-3">
                   <label className="block text-sm text-gray-600 mb-1">Name on Card</label>
                   <div className="bg-gray-100 h-10 rounded"></div>
                 </div>
-                
+
                 <div className="border border-gray-300 rounded-lg p-3">
                   <label className="block text-sm text-gray-600 mb-1">Billing Address</label>
                   <div className="bg-gray-100 h-10 rounded mb-2"></div>
@@ -328,17 +328,17 @@ async function handleEnrollStudent() {
                     <div className="bg-gray-100 h-10 rounded"></div>
                   </div>
                 </div>
-                
-                <button 
+
+                <button
                   onClick={() => {
                     closeStripeModal();
-                    handleEnroll({preventDefault: () => {}});
+                    handleEnroll({ preventDefault: () => { } });
                   }}
                   className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
                 >
                   Pay ${displayCourse?.price}
                 </button>
-                
+
                 <p className="text-xs text-gray-500 text-center">
                   By completing your purchase you agree to our Terms of Service and Privacy Policy
                 </p>

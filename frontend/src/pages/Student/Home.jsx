@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { Navbar } from "../../components/index.js";
-import { Example } from "../../components/Sidebar.jsx";
+import Navbar from "../../components/Navbar.jsx";
+import Example from "../../components/Sidebar.jsx";
 import { Outlet, useNavigate } from "react-router-dom";
-import Dashboard from "../../components/dashboard.jsx";
 
 const Home = () => {
   const navigate = useNavigate(); // Use the useNavigate hook for programmatic navigation

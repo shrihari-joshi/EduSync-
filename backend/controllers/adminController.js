@@ -1,14 +1,13 @@
-import { UserModel } from "../models/userModel.js";
-import { CourseModel } from "../models/courseModel.js";
 import { AssignmentModel } from "../models/assignmentModel.js";
+import pool from "../database/mySQLClient.js";
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await UserModel.find({})
+        const [users] = await pool.query('SELECT * FROM users');
         res.status(201).json({
             success: true,
             users: users
-        })
+        });
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -20,11 +19,18 @@ export const getAllUsers = async (req, res) => {
 
 export const deleteAllUsers = async (req, res) => {
     try {
-        const users = await UserModel.deleteMany({}, { new: true })
-        res.status(201).json({
-            success: true,
-            users: users
-        })
+        const [result] = await pool.query('DELETE FROM users');
+        if (result.affectedRows > 0) {
+            res.status(200).json({
+                success: true,
+                message: 'All users deleted successfully'
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: 'No users found to delete'
+            });
+        }
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -36,11 +42,11 @@ export const deleteAllUsers = async (req, res) => {
 
 export const getAllCourses = async (req, res) => {
     try {
-        const courses = await CourseModel.find({})
+        const [courses] = await pool.query('SELECT * FROM courses');
         res.status(201).json({
             success: true,
-            courses
-        })
+            courses: courses
+        });
     } catch (error) {
         console.log(error)
         return res.status(500).json({
@@ -52,11 +58,18 @@ export const getAllCourses = async (req, res) => {
 
 export const deleteAllCourses = async (req, res) => {
     try {
-        const courses = await CourseModel.deleteMany({}, { new: true })
-        res.status(201).json({
-            success: true,
-            courses
-        })
+        const [result] = await pool.query('DELETE FROM courses');
+        if (result.affectedRows > 0) {
+            res.status(200).json({
+                success: true,
+                message: 'All courses deleted successfully'
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: 'No courses found to delete'
+            });
+        }
     } catch (error) {
         console.log(error)
         return res.status(500).json({

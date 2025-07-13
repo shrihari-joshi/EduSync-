@@ -15,20 +15,20 @@ const RecommendedCourses = ({ onCourseClick }) => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-         /* const response = await axios.post(`${getCourseRecommendation}`, {
-            userId: user._id,
-          withCredentials: true,
-          });*/
-         const response = await axios.get(
-                    `${getAllCourses}`,
-                    { withCredentials: true }
-                );
+        // const response = await axios.post(`${getCourseRecommendation}`, {
+        //    userId: user._id,
+        //  withCredentials: true,
+        //  });
+        const response = await axios.get(
+          `${getAllCourses}`,
+          { withCredentials: true }
+        );
         if (response.data.success) {
           const userId = user?._id; // Assuming user object has _id
           const filteredCourses = response.data.courses.filter(
-          (course) => !course.students.includes(userId)
-        );
-            setCourses(filteredCourses);
+            (course) => !course.students.includes(userId)
+          );
+          setCourses(filteredCourses);
           console.log(response.data);
         }
       } catch (error) {

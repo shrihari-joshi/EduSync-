@@ -21,6 +21,5 @@ export const deleteChatsEndpoint = `${host}/chat/message/delete`
 export const geminiApi = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key"
 export const googleAuth = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token"
 export const gradeAssignment = `${host}/teacher/assignment`
-export const generateRoadmap = `${host}/teacher/course/roadmap`
 
 export const flaskApi = 'http://localhost:5000'

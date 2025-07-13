@@ -33,14 +33,14 @@ import { host } from '../../APIRoutes';
 export default function ProfilePage() {
     const toast = useToast();
     const navigate = useNavigate();
-    
+
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [newInterest, setNewInterest] = useState('');
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(null);
-    
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -50,7 +50,7 @@ export default function ProfilePage() {
         interests: [],
         image: null,
     });
-    
+
     const fileInputRef = useRef(null);
     const bgColor = useColorModeValue('white', 'gray.800');
     const innerBgColor = useColorModeValue('white', 'gray.700');
@@ -72,7 +72,7 @@ export default function ProfilePage() {
                 interests: userData.interests || [],
                 image: userData.image?.url || null,
             });
-            
+
             if (userData.image?.url) {
                 setPreviewImage(userData.image.url);
             }
@@ -83,7 +83,7 @@ export default function ProfilePage() {
         const file = e.target.files[0];
         if (file) {
             setSelectedFile(file);
-            
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 setPreviewImage(e.target.result);
@@ -99,7 +99,7 @@ export default function ProfilePage() {
             [name]: value,
         }));
     };
-    
+
     const handleAddInterest = () => {
         if (newInterest.trim() && !formData.interests.includes(newInterest.trim())) {
             setFormData(prev => ({
@@ -109,7 +109,7 @@ export default function ProfilePage() {
             setNewInterest('');
         }
     };
-    
+
     const handleRemoveInterest = (interest) => {
         setFormData(prev => ({
             ...prev,
@@ -119,20 +119,20 @@ export default function ProfilePage() {
 
     const handleProfileUpdate = async () => {
         if (!user) return;
-        
+
         setLoading(true);
         const data = new FormData();
-        
+
         // Append all form fields
         data.append('name', formData.name);
         data.append('email', formData.email);
         data.append('username', formData.username);
         data.append('branch', formData.branch);
         data.append('about', formData.about);
-        
+
         // Append interests as JSON string
         data.append('interests', JSON.stringify(formData.interests));
-        
+
         // Append image file if selected
         if (selectedFile) {
             data.append('image', selectedFile);
@@ -144,12 +144,12 @@ export default function ProfilePage() {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            
+
             // Update local user state and localStorage
             const updatedUser = response.data.user;
             setUser(updatedUser);
             localStorage.setItem('user', JSON.stringify(updatedUser));
-            
+
             toast({
                 title: "Profile Updated",
                 description: response.data.message,
@@ -157,7 +157,7 @@ export default function ProfilePage() {
                 duration: 3000,
                 isClosable: true,
             });
-            
+
             setIsEditing(false);
         } catch (error) {
             console.error(error);
@@ -175,7 +175,7 @@ export default function ProfilePage() {
 
     const cancelEditing = () => {
         if (!user) return;
-        
+
         // Reset form data to original user values
         setFormData({
             name: user.name || '',
@@ -186,11 +186,11 @@ export default function ProfilePage() {
             interests: user.interests || [],
             image: user.image?.url || null,
         });
-        
+
         // Reset preview image
         setPreviewImage(user.image?.url || null);
         setSelectedFile(null);
-        
+
         // Exit edit mode
         setIsEditing(false);
     };
@@ -210,10 +210,10 @@ export default function ProfilePage() {
                 {/* Header with avatar and basic info */}
                 <Flex direction={{ base: "column", md: "row" }} align={{ base: "center", md: "flex-start" }} mb={6}>
                     <Box position="relative" mr={{ base: 0, md: 6 }} mb={{ base: 4, md: 0 }}>
-                        <Avatar 
-                            size="2xl" 
-                            name={formData.name} 
-                            src={previewImage} 
+                        <Avatar
+                            size="2xl"
+                            name={formData.name}
+                            src={previewImage}
                             border="2px solid"
                             borderColor="indigo.400"
                         />
@@ -238,7 +238,7 @@ export default function ProfilePage() {
                             accept="image/png, image/jpeg, image/jpg"
                         />
                     </Box>
-                    
+
                     <Box flex="1">
                         <Heading size="xl" mb={1}>{formData.name}</Heading>
                         <Text fontSize="lg" color={textColor} mb={2}>@{formData.username}</Text>
@@ -254,7 +254,7 @@ export default function ProfilePage() {
                                 </Tag>
                             )}
                         </HStack>
-                        
+
                         <HStack spacing={4} mt={4}>
                             <Button
                                 leftIcon={isEditing ? <FaTimes /> : <FaEdit />}
@@ -264,7 +264,7 @@ export default function ProfilePage() {
                             >
                                 {isEditing ? "Cancel" : "Edit Profile"}
                             </Button>
-                            
+
                             {isEditing && (
                                 <Button
                                     leftIcon={<FaSave />}
@@ -280,9 +280,9 @@ export default function ProfilePage() {
                         </HStack>
                     </Box>
                 </Flex>
-                
+
                 <Divider my={6} />
-                
+
                 {/* Main content */}
                 {isEditing ? (
                     <VStack spacing={6} align="stretch">
@@ -297,7 +297,7 @@ export default function ProfilePage() {
                                     focusBorderColor="indigo.400"
                                 />
                             </FormControl>
-                            
+
                             <FormControl isRequired>
                                 <FormLabel htmlFor="username">Username</FormLabel>
                                 <Input
@@ -309,7 +309,7 @@ export default function ProfilePage() {
                                 />
                             </FormControl>
                         </SimpleGrid>
-                        
+
                         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
                             <FormControl isRequired>
                                 <FormLabel htmlFor="email">Email Address</FormLabel>
@@ -322,7 +322,7 @@ export default function ProfilePage() {
                                     focusBorderColor="indigo.400"
                                 />
                             </FormControl>
-                            
+
                             <FormControl>
                                 <FormLabel htmlFor="branch">Branch/Specialization</FormLabel>
                                 <Select
@@ -343,7 +343,7 @@ export default function ProfilePage() {
                                 </Select>
                             </FormControl>
                         </SimpleGrid>
-                        
+
                         <FormControl>
                             <FormLabel htmlFor="about">About Me</FormLabel>
                             <Textarea
@@ -357,7 +357,7 @@ export default function ProfilePage() {
                                 rows={4}
                             />
                         </FormControl>
-                        
+
                         <FormControl>
                             <FormLabel htmlFor="interests">Interests/Skills</FormLabel>
                             <InputGroup size="md">
@@ -379,14 +379,14 @@ export default function ProfilePage() {
                                     />
                                 </InputRightElement>
                             </InputGroup>
-                            
+
                             <Box mt={3}>
                                 <HStack spacing={2} flexWrap="wrap">
                                     {formData.interests.map((interest, index) => (
-                                        <Tag 
-                                            key={index} 
-                                            size="md" 
-                                            colorScheme="indigo" 
+                                        <Tag
+                                            key={index}
+                                            size="md"
+                                            colorScheme="indigo"
                                             m={1}
                                         >
                                             <TagLabel>{interest}</TagLabel>
@@ -404,30 +404,30 @@ export default function ProfilePage() {
                                 <Text fontWeight="semibold" mb={1}>Email</Text>
                                 <Text>{formData.email}</Text>
                             </Box>
-                            
+
                             <Box p={4} bg={secondaryBgColor} rounded="md">
                                 <Text fontWeight="semibold" mb={1}>Branch / Specialization</Text>
                                 <Text>{formData.branch || "Not specified"}</Text>
                             </Box>
                         </SimpleGrid>
-                        
+
                         <Box mb={6}>
                             <Text fontWeight="semibold" fontSize="lg" mb={2}>About</Text>
                             <Box p={4} bg={secondaryBgColor} rounded="md">
                                 <Text>{formData.about || "No information provided."}</Text>
                             </Box>
                         </Box>
-                        
+
                         <Box>
                             <Text fontWeight="semibold" fontSize="lg" mb={2}>Interests & Skills</Text>
                             <Box p={4} bg={secondaryBgColor} rounded="md">
                                 {formData.interests && formData.interests.length > 0 ? (
                                     <HStack spacing={2} flexWrap="wrap">
                                         {formData.interests.map((interest, index) => (
-                                            <Tag 
-                                                key={index} 
-                                                size="md" 
-                                                colorScheme="indigo" 
+                                            <Tag
+                                                key={index}
+                                                size="md"
+                                                colorScheme="indigo"
                                                 m={1}
                                             >
                                                 <TagLabel>{interest}</TagLabel>

@@ -2,26 +2,19 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ViewTeacherCourse } from "./pages/index.js";
-import { PageNotFound } from "./components/index.js";
+import ViewTeacherCourse from "./pages/Teacher/ViewTeacherCourse.jsx";
+import PageNotFound from "./components/PageNotFound.jsx";
 import { ChakraProvider, ColorModeContext } from "@chakra-ui/react";
 import Home from "./pages/Student/Home.jsx";
-import Courses from "./pages/Student/Courses.jsx";
 import Register from "./pages/Auth/Register.jsx";
 import Login from "./pages/Auth/Login.jsx";
-import MyCourses from "./pages/Student/MyCourses.jsx";
-import Quiz from "./pages/Student/Quiz.jsx";
 import ProfilePage from "./pages/Student/Profile.jsx";
-import CoursePage from "./pages/Student/CourseDetails.jsx";
 import TeacherProfile from "./components/TeacherProfile.jsx";
 import LandingPage from "./pages/landingPage.jsx";
 import Blog from "./pages/Blog.jsx";
 import TeacherCourse from "./components/TeacherCourse.jsx";
-import SignLanguageCourse from "./pages/SignLangugae/signLangCoursePage.jsx";
 import ChakraCalendar from "./pages/Student/Calendar.jsx";
-import Chat from "./pages/Student/Chat.jsx";
 import ChatbotInterface from "./pages/Student/ChatBot.jsx";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import AllCoursePage from "./pages/Student/AllCoursePage.jsx";
 import Dashboard from "./components/dashboard.jsx";
 import CourseDetailsPage from "./components/courses/courses/CourseDetailPage.jsx";
@@ -45,6 +38,10 @@ const router = createBrowserRouter([
         element: <AllCoursePage />,
       },
       {
+        path: "explore",
+        element: <AllCoursePage />,
+      },
+      {
         path: "mycourses/:id",
         element: <CourseDetailsPage />,
       },
@@ -62,16 +59,8 @@ const router = createBrowserRouter([
         element: <ChakraCalendar />,
       },
       {
-        path: "quiz/:id/:idx",
-        element: <Quiz />,
-      },
-      {
         path: "profile",
         element: <ProfilePage />,
-      },
-      {
-        path: "course-details/:id",
-        element: <CoursePage />,
       },
       {
         path: "teacherProfile",
@@ -84,10 +73,6 @@ const router = createBrowserRouter([
       {
         path: "teacher-add-course",
         element: <TeacherCourse />,
-      },
-      {
-        path: "signLanguage",
-        element: <SignLanguageCourse />,
       },
     ],
     errorElement: <PageNotFound />,
@@ -107,12 +92,10 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <GoogleOAuthProvider clientId={`${import.meta.env.VITE_GOOGLE_AUTH_KEY}`}>
+  <StrictMode>
     <ChakraProvider>
       <RouterProvider router={router} />
     </ChakraProvider>
-  </GoogleOAuthProvider>
 
-  /* </StrictMode> */
+  </StrictMode>
 );

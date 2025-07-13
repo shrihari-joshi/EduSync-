@@ -3,14 +3,15 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
 const Histogram = ({ studentMarks }) => {
   // Create bins for the histogram
   const marks = studentMarks.map(student => student.marks); // Extract marks from student data
   const maxMark = Math.max(...marks);  // Get the maximum mark to determine bin range
   const binSize = 10; // Define the size of each bin (e.g., 10 marks per bin)
-  
+
   const bins = Array(Math.ceil(maxMark / binSize)).fill(0); // Create bins of size binSize
-  
+
   // Populate the bins based on student marks
   marks.forEach(mark => {
     const binIndex = Math.floor(mark / binSize);

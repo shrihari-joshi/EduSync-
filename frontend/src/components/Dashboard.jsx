@@ -11,7 +11,6 @@ import PerformanceChart from './PerformanceChart.jsx';
 import ContributionGrid from './ContributionGrid.jsx';
 import axios from "axios";
 import { getAllCourses } from '../APIRoutes/index.js';
-import ReactFlowRoadmap from './Graphmap.jsx';
 
 const parseJwt = (token) => {
     try {
@@ -306,38 +305,7 @@ const Dashboard = () => {
                 </div>
             </section>
 
-            {/* Upcoming Courses Section */}
-            {upcomingCourses.length > 0 && (
-                <section className="mb-6">
-                    <h2 className={`text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-800'}`}>Upcoming Classes</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {upcomingCourses.map(course => (
-                            <div key={course.id} className={`rounded-lg p-6 ${isDark ? 'bg-indigo-300 text-black' : 'bg-indigo-300 '}`}>
-                                <div className="flex items-center gap-2 mb-4">
-                                    <div className={`p-2 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                                        {course.icon}
-                                    </div>
-                                    <div>
-                                        <h3 className="font-medium">{course.title}</h3>
-                                        <p className={`text-xs ${isDark ? 'text-gray-900' : 'text-gray-900'}`}>{course.level}</p>
-                                    </div>
-                                </div>
-                                <div className={`text-sm ${isDark ? 'text-gray-900' : 'text-gray-900'}`}>
-                                    <div className="flex justify-between">
-                                        <span>Date:</span>
-                                        <span>{course.date}</span>
-                                    </div>
-                                    <div className="flex justify-between mt-1">
-                                        <span>Duration:</span>
-                                        <span>{course.duration}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-            )}
-            <ReactFlowRoadmap />
+
         </div>
     );
 };

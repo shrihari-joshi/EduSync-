@@ -8,9 +8,8 @@ import {
 import { useToast } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { getUserByEmailRoute, googleAuth, loginRoute } from '../../APIRoutes/index.js';
+import { getUserByEmailRoute, loginRoute } from '../../APIRoutes/index.js';
 import { motion } from 'framer-motion';
-import { GoogleLogin } from '@react-oauth/google';
 import bgImage from '../../assets/bg.png';
 
 const Login = () => {
@@ -56,48 +55,6 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = async (credentialResponse) => {
-    //Data fetching
-    try {
-      console.log(credentialResponse);
-      const { credential } = credentialResponse;
-      const googleToken = credential; // This is the Google OAuth token
-
-      // Now use this token to fetch user details
-      const peopleResponse = await axios.get(`${googleAuth}=${googleToken}`);
-
-      const userData = peopleResponse.data;
-      console.log('User Data from Google People API:', userData);
-
-      const response = await axios.get(getUserByEmailRoute, {
-        headers: {
-          'email': userData.email
-        }
-      })
-
-      if (response.data.success) {
-        localStorage.setItem('token', JSON.stringify(userData.kid));
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/home')
-        toast({
-          title: 'Logged in',
-          description: `${response.data.message}`,
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: 'Error',
-        description: `${error}`,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  }
 
   // Animation variants
   const containerVariants = {
@@ -256,16 +213,7 @@ const Login = () => {
                   <div className="flex-grow border-t border-gray-300"></div>
                 </div>
 
-                <div className="flex justify-center">
-                  <GoogleLogin
-                    onSuccess={credentialResponse => {
-                      handleGoogleLogin(credentialResponse);
-                    }}
-                    onError={() => {
-                      console.log('Login Failed');
-                    }}
-                  />
-                </div>
+
               </motion.div>
             )}
 

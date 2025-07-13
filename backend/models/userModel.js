@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -36,27 +36,6 @@ const UserSchema = mongoose.Schema({
     publicId: {
       type: String,
     },
-  },
-  personalizedRoadmap: {
-    type: Map,
-    of: new mongoose.Schema(
-      {
-        performance: {
-          type: Number,
-          default: 0,
-        },
-        suggestions: {
-          type: Map,
-          of: [String],
-        },
-        lastUpdated: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-      { _id: false }
-    ),
-    default: new Map(),
   },
   dob: {
     type: {

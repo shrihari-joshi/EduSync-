@@ -11,32 +11,11 @@ const CourseSection = ({
 }) => {
   const [activeTab, setActiveTab] = useState("ongoing");
   // Mock tab counts - replace with actual data
-  const tabCounts = {
-    ongoing: 8,
-    completed: 10,
-    saved: 12,
-    favorite: 25
-  };
+
 
   return (
     <div className="bg-white rounded-xl shadow p-6 mb-8">
-      <h2 className="text-xl font-bold mb-6">{title}</h2>
-      {/* Tabs Navigation */}
-      <div className="flex items-center mb-8">
-        <div className="flex space-x-4">
-          {['ongoing', 'completed', 'saved', 'favorite'].map(tab => (
-            <button
-              key={tab}
-              className={`px-4 py-2 rounded-lg flex items-center ${activeTab === tab ? "bg-indigo-400 text-white-600" : "text-white-600"
-                }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)} ({tabCounts[tab]})
-            </button>
-          ))}
-        </div>
-
-      </div>
+      <h2 className="text-xl font-bold mb-6 text-gray-700">{title}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {isLoading ? (
